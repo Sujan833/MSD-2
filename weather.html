@@ -2,46 +2,80 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Weather Report</title>
+    <title>Simulated Weather Report</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(to top, #a0d8ef, #ffffff);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .weather-box {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background: linear-gradient(to right, #e0f7fa, #fffde7);
+            padding: 40px;
             text-align: center;
-            width: 3000px;
         }
-        .weather-box h2 {
-            margin-top: 0;
+        .container {
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            width: 1000px;
+            margin: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .temp {
-            font-size: 48px;
-            margin: 20px 0;
+        input {
+            padding: 10px;
+            width: 90%;
+            margin: 10px 0;
         }
-        .description {
-            font-size: 18px;
-            color: #555;
+        button {
+            padding: 10px 20px;
+            background-color: #00796b;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .weather-result {
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="weather-box">
-        <h2>Weather in New York</h2>
-        <div class="temp">22°C</div>
-        <div class="description">Partly Cloudy</div>
-        <p>Humidity: 60%</p>
-        <p>Wind: 15 km/h</p>
+
+    <div class="container">
+        <h2>Enter Location</h2>
+        <input type="text" id="locationInput" placeholder="e.g. Tokyo">
+        <button onclick="generateFakeWeather()">Get Weather</button>
+
+        <div class="weather-result" id="weatherResult"></div>
     </div>
+
+    <script>
+        function getRandomItem(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function generateFakeWeather() {
+            const location = document.getElementById("locationInput").value;
+            if (!location) return;
+
+            const temps = [22, 25, 28, 30, 31, 18, 16, 20, 35, 27];
+            const conditions = ["Sunny", "Cloudy", "Rainy", "Thunderstorms", "Windy", "Foggy", "Clear"];
+            const humidityLevels = [40, 50, 60, 70, 80, 65];
+            const windSpeeds = [5, 10, 12, 15, 20, 8];
+
+            const temp = getRandomItem(temps);
+            const condition = getRandomItem(conditions);
+            const humidity = getRandomItem(humidityLevels);
+            const wind = getRandomItem(windSpeeds);
+
+            const result = `
+                <h3>Weather in ${location}</h3>
+                <p><strong>Temperature:</strong> ${temp}°C</p>
+                <p><strong>Condition:</strong> ${condition}</p>
+                <p><strong>Humidity:</strong> ${humidity}%</p>
+                <p><strong>Wind Speed:</strong> ${wind} km/h</p>
+            `;
+
+            document.getElementById("weatherResult").innerHTML = result;
+            document.getElementById("locationInput").value = "";
+        }
+    </script>
+
 </body>
 </html>
